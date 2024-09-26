@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 596784209}
   - component: {fileID: 596784208}
   - component: {fileID: 596784207}
+  - component: {fileID: 596784211}
   m_Layer: 0
   m_Name: MeshScriptHolder
   m_TagString: Untagged
@@ -148,7 +149,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596784206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15982837dfb9844298a8e507becdc192, type: 3}
   m_Name: 
@@ -218,6 +219,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &596784211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21242baf00a8432a899dd68339e1c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nrow: 5
+  ncol: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
