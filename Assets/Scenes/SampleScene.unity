@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 596784207}
   - component: {fileID: 596784211}
   - component: {fileID: 596784212}
+  - component: {fileID: 596784213}
   m_Layer: 0
   m_Name: MeshScriptHolder
   m_TagString: Untagged
@@ -241,14 +242,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596784206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9668c949f7df74826a2f03b0bef9235d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
   height: 3
-  nmeridians: 4
+  nmeridians: 16
+--- !u!114 &596784213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040a3cc2758644527892ef29dc5d1561, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  nmeridians: 16
+  nparallels: 2
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
