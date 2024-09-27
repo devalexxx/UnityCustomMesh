@@ -235,8 +235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21242baf00a8432a899dd68339e1c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nrow: 5
-  ncol: 5
+  nRow: 5
+  nCol: 5
 --- !u!114 &596784212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 1
   height: 3
-  nmeridians: 16
+  nMeridians: 16
 --- !u!114 &596784213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,8 +265,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
-  nmeridians: 32
-  nparallels: 16
+  nMeridians: 16
+  nParallels: 8
 --- !u!114 &596784214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 1
   height: 3
-  nMeridians: 16
+  nMeridians: 32
 --- !u!114 &596784215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,14 +289,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596784206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76fa07c1aafff4691a215c7741af8c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
   height: 3
-  cuttingHeight: 2.5
+  cuttingHeight: 1.5
   nMeridians: 16
 --- !u!1 &705507993
 GameObject:

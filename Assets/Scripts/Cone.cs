@@ -100,6 +100,9 @@ public class Cone : MonoBehaviour
             triangles.AddRange(new int[] { centerBotIndex, currentBotIndex, startBotIndex });
         }
 
+        Debug.Assert(vertices.Count == nMeridians + 2, "Unexpected amount of vertices for this mesh");
+        Debug.Assert(triangles.Count / 3 == nMeridians * 2, "Unexpected amount of triangles for this mesh");
+
         mesh.vertices  = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
     }

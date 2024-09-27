@@ -147,6 +147,10 @@ public class Sphere : MonoBehaviour
         vertices.Add(new Vector3(0.0f,  radius, 0.0f));
         vertices.Add(new Vector3(0.0f, -radius, 0.0f));
 
+
+        Debug.Assert(vertices.Count == nMeridians * nParallels + 2, "Unexpected amount of vertices for this mesh");
+        Debug.Assert(triangles.Count / 3 == 2 * nMeridians * (nParallels - 1) + 2 * nMeridians, "Unexpected amount of triangles for this mesh");
+
         mesh.vertices  = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
     }

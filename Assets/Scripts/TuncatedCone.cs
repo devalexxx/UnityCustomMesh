@@ -150,6 +150,9 @@ public class TuncatedCone : MonoBehaviour
         vertices.Add(new Vector3(0.0f, cuttingHeight, 0.0f));
         vertices.Add(new Vector3(0.0f, 0.0f, 0.0f));
 
+        Debug.Assert(vertices.Count == 2 * nMeridians + 2, "Unexpected amount of vertices for this mesh");
+        Debug.Assert(triangles.Count / 3 == nMeridians * 4, "Unexpected amount of triangles for this mesh");
+
         mesh.vertices  = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
     }

@@ -134,6 +134,9 @@ public class Cylinder : MonoBehaviour
         vertices.Add(new Vector3(0.0f,  height / 2.0f, 0.0f));
         vertices.Add(new Vector3(0.0f, -height / 2.0f, 0.0f));
 
+        Debug.Assert(vertices.Count == nMeridians * 2 + 2, "Unexpected amount of vertices for this mesh");
+        Debug.Assert(triangles.Count / 3 == 4 * nMeridians, "Unexpected amount of triangles for this mesh");
+
         mesh.vertices  = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
     }

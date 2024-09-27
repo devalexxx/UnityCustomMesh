@@ -72,8 +72,8 @@ public class SizeablePlan : MonoBehaviour
 
         }
 
-        Debug.Log(vertices.Count);
-        Debug.Log(triangles.Count / 3);
+        Debug.Assert(vertices.Count == nVertexPerCol * nVertexPerRow, "Unexpected amount of vertices for this mesh");
+        Debug.Assert(triangles.Count / 3 == nRow * nCol * 2, "Unexpected amount of triangles for this mesh");
 
         mesh.vertices  = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
