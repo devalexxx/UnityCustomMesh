@@ -137,6 +137,8 @@ GameObject:
   - component: {fileID: 596784211}
   - component: {fileID: 596784212}
   - component: {fileID: 596784213}
+  - component: {fileID: 596784214}
+  - component: {fileID: 596784215}
   m_Layer: 0
   m_Name: MeshScriptHolder
   m_TagString: Untagged
@@ -257,7 +259,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596784206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 040a3cc2758644527892ef29dc5d1561, type: 3}
   m_Name: 
@@ -265,6 +267,37 @@ MonoBehaviour:
   radius: 1
   nmeridians: 32
   nparallels: 16
+--- !u!114 &596784214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadd3f08d31414fe0a4520242a2112be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  height: 3
+  nMeridians: 16
+--- !u!114 &596784215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76fa07c1aafff4691a215c7741af8c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  height: 3
+  cuttingHeight: 2.5
+  nMeridians: 16
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
