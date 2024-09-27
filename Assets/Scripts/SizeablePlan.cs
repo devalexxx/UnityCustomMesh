@@ -6,112 +6,74 @@ public class SizeablePlan : MonoBehaviour
     private MeshFilter filter;
 
     [SerializeField]
-    private uint nrow = 1;
+    private uint nRow = 1;
 
     [SerializeField]
-    private uint ncol = 1;
+    private uint nCol = 1;
 
     void Awake()
     {
         filter = GetComponent<MeshFilter>();
+
+        if (nCol <= 0)
+        {
+            Debug.LogWarning("SizeablePlan::nCol must be greater than 0");;
+            nCol = 1;
+        }
+
+        if (nRow <= 0)
+        {
+            Debug.LogWarning("SizeablePlan::nRow must be greater than 0");;
+            nRow = 1;
+        }
+        
     }
 
     void Start()
     {
-        // FastBuild();
-        OptimizeBuild();
-    }
-
-    // Slower to build, but reuse some vertex
-    void OptimizeBuild()
-    {
         Mesh mesh = filter.mesh;
 
         List<Vector3> vertices  = new();
         List<int>     triangles = new();
 
-        for (uint row = 0; row < nrow; ++row)
+        int nVertexPerRow = (int)(nCol + 1);
+        int nVertexPerCol = (int)(nRow + 1);
+
         {
-            for (uint col = 0; col < ncol; ++col)
+            // Predefined first line of vertices
+            for (uint col = 0; col < nVertexPerRow; ++col)
             {
-                Vector3 vertex;
-                int     idx;
-                int[]   defaultTriangles = new int[] { 0, 0, 0, 0, 0, 0 };
+                vertices.Add(new(0.0f + col, 0.0f, 0.0f));
+            }
 
-                vertex = new Vector3(0.0f + col, 0.0f + row, 0.0f);
-                idx    = vertices.FindIndex(0, x => x == vertex);
-                if (idx == -1)
+            for (int row = 1; row < nVertexPerCol; ++row)
+            {
+                int topPointIndex = (row - 1) * nVertexPerRow;
+
+                vertices.Add(new(0.0f, 0.0f + row, 0.0f));
+                int botPointIndex = vertices.Count - 1;
+
+                for (int col = 1; col < nVertexPerRow; ++col)
                 {
-                    vertices.Add(vertex);
-                    idx = vertices.Count - 1;
-                }
-                defaultTriangles[2] = idx;
-                defaultTriangles[5] = idx;
+                    vertices.Add(new(0.0f + col, 0.0f + row, 0.0f));
 
-                vertex = new Vector3(1.0f + col, 0.0f + row, 0.0f);
-                idx    = vertices.FindIndex(0, x => x == vertex);
-                if (idx == -1)
-                {
-                    vertices.Add(vertex);
-                    idx = vertices.Count - 1;
-                }
-                defaultTriangles[1] = idx;
+                    int nextTopPointIndex = topPointIndex + 1;
+                    int nextBotPointIndex = vertices.Count - 1;
 
-                vertex = new Vector3(1.0f + col, 1.0f + row, 0.0f);
-                idx    = vertices.FindIndex(0, x => x == vertex);
-                if (idx == -1)
-                {
-                    vertices.Add(vertex);
-                    idx = vertices.Count - 1;
-                }
-                defaultTriangles[0] = idx;
-                defaultTriangles[4] = idx;
+                    triangles.AddRange(new int[] {
+                        topPointIndex, botPointIndex, nextBotPointIndex,
+                        nextTopPointIndex, topPointIndex, nextBotPointIndex
+                    });
 
-                vertex = new Vector3(0.0f + col, 1.0f + row, 0.0f);
-                idx    = vertices.FindIndex(0, x => x == vertex);
-                if (idx == -1)
-                {
-                    vertices.Add(vertex);
-                    idx = vertices.Count - 1;
-                }
-                defaultTriangles[3] = idx;
+                    topPointIndex = nextTopPointIndex;
+                    botPointIndex = nextBotPointIndex;
+                }   
+            }
 
-                triangles.AddRange(defaultTriangles);
-            }   
         }
 
-        mesh.vertices  = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
-    }
-
-    // Fast to build but create mesh with duplicate vertex
-    void FastBuild()
-    {
-        Mesh mesh = filter.mesh;
-
-        List<Vector3> vertices  = new();
-        List<int>     triangles = new();
-
-        for (uint row = 0; row < nrow; ++row)
-        {
-            for (uint col = 0; col < ncol; ++col)
-            {
-                vertices.AddRange(new Vector3[] 
-                {
-                    new(0.0f + col, 0.0f + row, 0.0f),
-                    new(1.0f + col, 0.0f + row, 0.0f),
-                    new(1.0f + col, 1.0f + row, 0.0f),
-                    new(0.0f + col, 1.0f + row, 0.0f),
-                });
-
-                int offset = 4 * (int)(row * ncol + col);
-                triangles.AddRange(new int[]
-                {
-                    2 + offset, 1 + offset, 0 + offset,
-                    3 + offset, 2 + offset, 0 + offset
-                });
-            }   
-        }
+        Debug.Log(vertices.Count);
+        Debug.Log(triangles.Count / 3);
 
         mesh.vertices  = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
