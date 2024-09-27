@@ -263,8 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 1
-  nmeridians: 16
-  nparallels: 2
+  nmeridians: 32
+  nparallels: 16
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
