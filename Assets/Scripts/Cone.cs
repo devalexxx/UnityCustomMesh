@@ -17,6 +17,24 @@ public class Cone : MonoBehaviour
     void Awake()
     {
         filter = GetComponent<MeshFilter>();
+
+        if (nMeridians < 3)
+        {
+            Debug.LogWarning("Cone::nMeridians must be greater than 3");
+            nMeridians = 3;
+        }
+
+        if (height < 0)
+        {
+            Debug.LogWarning("Cone::height must be positive");
+            height = Mathf.Abs(height);
+        }
+
+        if (radius < 0)
+        {
+            Debug.LogWarning("Cone::radius must be positive");
+            radius = Mathf.Abs(radius);
+        }
     }
 
     void Start()

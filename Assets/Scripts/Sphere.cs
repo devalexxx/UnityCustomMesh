@@ -11,20 +11,33 @@ public class Sphere : MonoBehaviour
     private float radius = 1.0f;
 
     [SerializeField]
-    private uint nmeridians = 3;
+    private uint nMeridians = 3;
     
     [SerializeField]
-    private uint nparallels = 2;
+    private uint nParallels = 2;
 
     void Awake()
     {
         filter = GetComponent<MeshFilter>();
 
-        if (nmeridians < 3)
-            nmeridians = 3;
+        if (nMeridians < 3)
+        {
+            Debug.LogWarning("Sphere::nMeridians must be greater than 3");
+            nMeridians = 3;
+        }
 
-        if (nparallels < 2)
-            nparallels = 2;
+        if (nParallels < 2)
+        {
+            Debug.LogWarning("Sphere::nParallels must be greater than 2");
+            nParallels = 2;
+        }
+
+        if (radius < 0)
+        {
+            Debug.LogWarning("Sphere::radius must be positive");
+            radius = Mathf.Abs(radius);
+        }
+            
     }
 
     void Start()
@@ -35,9 +48,9 @@ public class Sphere : MonoBehaviour
         List<int>     triangles = new();
 
         {
-            int vFaces = (int)(nparallels + 1);
+            int vFaces = (int)(nParallels + 1);
 
-            float theta = Mathf.PI * 2 / nmeridians;
+            float theta = Mathf.PI * 2 / nMeridians;
             float phi   = Mathf.PI / vFaces;
 
             // Sphere body
@@ -48,7 +61,7 @@ public class Sphere : MonoBehaviour
                     radius * Mathf.Cos(phi),
                     radius * Mathf.Sin(phi) * Mathf.Sin(0.0f)
                 ));
-                for (int meridian = (int)(nmeridians - 1); meridian > 0; meridian--)
+                for (int meridian = (int)(nMeridians - 1); meridian > 0; meridian--)
                 {
                     vertices.Add(new(
                         radius * Mathf.Sin(phi) * Mathf.Cos(meridian * theta),
@@ -61,31 +74,29 @@ public class Sphere : MonoBehaviour
                 {
                     float botVAngle = (vFace + 1) * phi;
 
-                    int firstTopPointIndex = (vFace - 1) * (int)nmeridians;
+                    int firstTopPointIndex = (vFace - 1) * (int)nMeridians;
                     int topPointIndex      = firstTopPointIndex;
 
-                    Vector3 firstBotPoint = new(
+                    vertices.Add(new(
                         radius * Mathf.Sin(botVAngle) * Mathf.Cos(0.0f),
                         radius * Mathf.Cos(botVAngle),
                         radius * Mathf.Sin(botVAngle) * Mathf.Sin(0.0f)
-                    );
-                    vertices.Add(firstBotPoint);
+                    ));
                     int firstBotPointIndex = vertices.Count - 1;
                     int botPointIndex      = firstBotPointIndex;
 
 
-                    for (int meridian = (int)(nmeridians - 1); meridian > 0; meridian--)
+                    for (int meridian = (int)(nMeridians - 1); meridian > 0; meridian--)
                     {
                         float hAngle = meridian * theta;
 
-                        Vector3 nextBotPoint = new(
+                        vertices.Add(new(
                             radius * Mathf.Sin(botVAngle) * Mathf.Cos(hAngle),
                             radius * Mathf.Cos(botVAngle),
                             radius * Mathf.Sin(botVAngle) * Mathf.Sin(hAngle)
-                        );
-                        vertices.Add(nextBotPoint);
+                        ));
 
-                        int nextTopPointIndex = vFace * (int)nmeridians - meridian;
+                        int nextTopPointIndex = vFace * (int)nMeridians - meridian;
                         int nextBotPointIndex = vertices.Count - 1;
 
                         triangles.AddRange(new int[] {
@@ -109,7 +120,7 @@ public class Sphere : MonoBehaviour
 
             // South pole
             {
-                int startBotIndex   = vertices.Count - (int)nmeridians;
+                int startBotIndex   = vertices.Count - (int)nMeridians;
                 int currentBotIndex = startBotIndex;
                 for (int i = vertices.Count - 1; i > startBotIndex; --i)
                 {
@@ -123,7 +134,7 @@ public class Sphere : MonoBehaviour
             {
                 int startTopIndex   = 0;
                 int currentTopIndex = startTopIndex;
-                for (int i = startTopIndex + 1; i < nmeridians; i++)
+                for (int i = startTopIndex + 1; i < nMeridians; i++)
                 {
                     triangles.AddRange(new int[] { northPoleIndex, currentTopIndex, i });
                     currentTopIndex = i;

@@ -12,17 +12,29 @@ public class Cylinder : MonoBehaviour
     private float height = 3.0f;
 
     [SerializeField]
-    private uint nmeridians = 16;
+    private uint nMeridians = 16;
 
     void Awake()
     {
         filter = GetComponent<MeshFilter>();
 
-        if (nmeridians < 3)
-            nmeridians = 3;
+        if (nMeridians < 3)
+        {
+            Debug.LogWarning("Cylinder::nMeridians must be greater than 3");
+            nMeridians = 3;
+        }
 
         if (height < 0)
+        {
+            Debug.LogWarning("Cylinder::height must be positive");
             height = Mathf.Abs(height);
+        }
+
+        if (radius < 0)
+        {
+            Debug.LogWarning("Cylinder::radius must be positive");
+            radius = Mathf.Abs(radius);
+        }
     }
 
     void Start()
@@ -34,21 +46,18 @@ public class Cylinder : MonoBehaviour
 
         // Vertical faces
         {
-            float theta = 2 * Mathf.PI / nmeridians;
+            float theta = 2 * Mathf.PI / nMeridians;
 
-            Vector3 firstBotPoint = new(
+            vertices.Add(new(
                 radius * Mathf.Cos(0.0f),
                 -height / 2,
                 radius * Mathf.Sin(0.0f)
-            );
-            Vector3 firstTopPoint = new(
+            ));
+            vertices.Add(new(
                 radius * Mathf.Cos(0.0f),
                 height / 2,
                 radius * Mathf.Sin(0.0f)
-            );
-
-            vertices.Add(firstBotPoint);
-            vertices.Add(firstTopPoint);
+            ));
 
             int firstBotPointIndex = 0;
             int firstTopPointIndex = 1;
@@ -56,23 +65,20 @@ public class Cylinder : MonoBehaviour
             int botPointIndex = firstBotPointIndex;
             int topPointIndex = firstTopPointIndex;
 
-            for (int i = (int)(nmeridians - 1); i > 0; i--)
+            for (int i = (int)(nMeridians - 1); i > 0; i--)
             {
                 float angle = i * theta;
 
-                Vector3 nextBotPoint = new(
+                vertices.Add(new(
                     radius * Mathf.Cos(angle),
                     -height / 2,
                     radius * Mathf.Sin(angle)
-                );
-                Vector3 nextTopPoint = new(
+                ));
+                vertices.Add(new(
                     radius * Mathf.Cos(angle),
                     height / 2,
                     radius * Mathf.Sin(angle)
-                );
-
-                vertices.Add(nextBotPoint);
-                vertices.Add(nextTopPoint);
+                ));
 
                 int nextTopPointIndex = vertices.Count - 1;
                 int nextBotPointIndex = nextTopPointIndex - 1;
@@ -92,7 +98,7 @@ public class Cylinder : MonoBehaviour
             });
         }
 
-        // Preshot bot top and bottom center index to form triangles without interfere with the loop
+        // Preshot both top and bottom center index to form triangles without interfere with the loop
         int centerTopIndex = vertices.Count;
         int centerBotIndex = vertices.Count + 1;
 

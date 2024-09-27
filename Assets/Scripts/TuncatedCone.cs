@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,22 +22,34 @@ public class TuncatedCone : MonoBehaviour
         filter = GetComponent<MeshFilter>();
 
         if (nMeridians < 3)
+        {
+            Debug.LogWarning("TruncatedCone::nMeridians must be greater than 3");
             nMeridians = 3;
+        }
 
         if (height < 0)
-            height = Mathf.Abs(height);
-
-        if (cuttingHeight < 0)
-            cuttingHeight = Mathf.Abs(cuttingHeight);
-
-        if (cuttingHeight > height)
         {
-            Debug.Log("cuttingHeight must be between 0 and height");
-            cuttingHeight = 0.9f * height;
+            Debug.LogWarning("TruncatedCone::height must be positive");
+            height = Mathf.Abs(height);
         }
 
         if (radius < 0)
+        {
+            Debug.LogWarning("TruncatedCone::radius must be positive");
             radius = Mathf.Abs(radius);
+        }
+
+        if (cuttingHeight < 0)
+        {
+            Debug.LogWarning("TruncatedCone::cuttingHeight must be positive");
+            cuttingHeight = Mathf.Abs(cuttingHeight);
+        }   
+
+        if (cuttingHeight > height)
+        {
+            Debug.LogWarning("TruncatedCone::cuttingHeight must be between 0 and TruncatedCone::height");
+            cuttingHeight = 0.9f * height;
+        }
     }
 
     void Start()
