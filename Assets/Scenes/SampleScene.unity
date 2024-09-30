@@ -139,6 +139,8 @@ GameObject:
   - component: {fileID: 596784213}
   - component: {fileID: 596784214}
   - component: {fileID: 596784215}
+  - component: {fileID: 596784216}
+  - component: {fileID: 596784217}
   m_Layer: 0
   m_Name: MeshScriptHolder
   m_TagString: Untagged
@@ -298,6 +300,35 @@ MonoBehaviour:
   height: 3
   cuttingHeight: 1.5
   nMeridians: 16
+--- !u!114 &596784216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6839fe493fa14c0c9b7ef8e4435c71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 1
+  nMeridians: 16
+  nParallels: 8
+  nCuttingMeridians: 3
+--- !u!114 &596784217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8408a11361ffc4552b6029e21745d684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: ./Assets/Models/OFF/buddha.off
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
