@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 596784209}
   - component: {fileID: 596784208}
   - component: {fileID: 596784211}
+  - component: {fileID: 596784212}
   m_Layer: 0
   m_Name: MeshScriptHolder
   m_TagString: Untagged
@@ -213,12 +214,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 596784206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b11a37ff2d4c4dd8867e1315841d2be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resolution: 5
+--- !u!114 &596784212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596784206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a91cd31e6d664e28b23724ba43dfd95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resolution: 5
+  _gap: 0.5
+  _op: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public class SphereRepr
+{
+    public float radius;
+    public Vector3 center;
+
+    public SphereRepr(float r, Vector3 c)
+    {
+        radius = r;
+        center = c;
+    }
+}
+
+public enum OperatorType
+{
+    Union, Intersection
+}
 
 public static class Utils
 {
@@ -13,16 +30,16 @@ public static class Utils
         cube.transform.SetParent(transform);
     }
 
-    public static void Subdivide(AABB aabb, uint depth, Transform transform)
+    public static void Subdivide(SphereRepr repr, AABB aabb, uint depth, Transform transform)
     {
-        switch (aabb.Intersect(new(0, 0, 0), 1))
+        switch (aabb.Intersect(repr))
         {
             case IntersectionType.Intersect:
                 if (depth > 0)
                 {
                     foreach (var aabb2 in aabb.Split())
                     {
-                        Subdivide(aabb2, depth - 1, transform);
+                        Subdivide(repr, aabb2, depth - 1, transform);
                     }
                 }
                 break;
@@ -31,6 +48,44 @@ public static class Utils
                 break;
             case IntersectionType.Outside:
                 break;
+        }
+    }
+
+    public static void Subdivide(SphereRepr[] reprs, AABB aabb, uint depth, Transform transform, OperatorType op)
+    {
+        List<IntersectionType> its = new();
+        foreach (var repr in reprs)
+        {   
+            its.Add(aabb.Intersect(repr));
+        }
+
+        if (!its.Contains(IntersectionType.Intersect))
+        {
+            switch (op)
+            {
+                case OperatorType.Intersection:
+                    if (its.All(it => it == IntersectionType.Inside))
+                        CreateCube(aabb, transform);
+                    break;
+                case OperatorType.Union:
+                    if (its.Contains(IntersectionType.Inside))
+                        CreateCube(aabb, transform);
+                    break;
+            }
+        }
+        else if (depth > 0)
+        {
+            foreach (var aabb2 in aabb.Split())
+            {
+                Subdivide(reprs, aabb2, depth - 1, transform, op);
+            }
+        }
+        else
+        {
+            if (op == OperatorType.Intersection && !its.Contains(IntersectionType.Outside))
+                CreateCube(aabb, transform);
+            else if (op == OperatorType.Union)
+                CreateCube(aabb, transform);
         }
     }
 

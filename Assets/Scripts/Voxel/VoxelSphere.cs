@@ -7,6 +7,6 @@ public class VoxelSphere : MonoBehaviour
 
     private void Start()
     {   
-        Utils.Subdivide(new(new Vector3(-1, -1, -1), new Vector3(1, 1, 1)), resolution, transform);
+        Utils.Subdivide(new (1, new Vector3(0, 0, 0)), new(new Vector3(-1, -1, -1), new Vector3(1, 1, 1)), resolution, transform);
     }
 }

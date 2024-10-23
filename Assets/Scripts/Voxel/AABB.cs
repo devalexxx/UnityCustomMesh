@@ -51,18 +51,18 @@ public class AABB
         return list.ToArray();
     }
 
-    public IntersectionType Intersect(Vector3 center, float r)
+    public IntersectionType Intersect(SphereRepr s)
     {
-        float r2 = r * r;
+        float r2 = s.radius * s.radius;
         float dmax = 0;
         float dmin = 0;
         for(int i = 0; i < 3; i++ ) {
-            float a = (center[i] - min[i]) * (center[i] - min[i]);
-            float b = (center[i] - max[i]) * (center[i] - max[i]);
+            float a = (s.center[i] - min[i]) * (s.center[i] - min[i]);
+            float b = (s.center[i] - max[i]) * (s.center[i] - max[i]);
             dmax += Mathf.Max(a, b);
-            if( center[i] < min[i]) 
+            if( s.center[i] < min[i]) 
                 dmin += a; 
-            else if( center[i] > max[i]) 
+            else if( s.center[i] > max[i]) 
                 dmin += b;
         }
         if( dmin <= r2 && dmax >= r2 ) 
