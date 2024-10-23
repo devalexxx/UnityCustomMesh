@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class SphereRepr
 {
     public float radius;
@@ -82,10 +84,16 @@ public static class Utils
         }
         else
         {
-            if (op == OperatorType.Intersection && !its.Contains(IntersectionType.Outside))
-                CreateCube(aabb, transform);
-            else if (op == OperatorType.Union)
-                CreateCube(aabb, transform);
+            switch (op)
+            {
+                case OperatorType.Intersection:
+                    if (!its.Contains(IntersectionType.Outside))
+                        CreateCube(aabb, transform);
+                    break;
+                case OperatorType.Union:
+                    CreateCube(aabb, transform);
+                    break;
+            }
         }
     }
 
