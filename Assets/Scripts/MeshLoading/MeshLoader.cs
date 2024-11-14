@@ -1,48 +1,46 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
 public static class MeshLoader
 {
-    public struct Mesh
+
+    public class Mesh
     {
-        public List<Vector3> vertices;
-        public List<Vector3> normals;
-        public List<int>     triangles;
+        public Vector3[] vertices;
+        public Vector3[] normals;
+        public int[]     triangles;
     }
 
     public static Mesh LoadOFFMesh(string path)
     {
-        Mesh mesh = new();
-
         List<Vector3> vertices  = new();
         List<int>     triangles = new();
 
         Vector3 vSum = new(0.0f, 0.0f, 0.0f);
-        float mMax = float.MinValue;
+        float mMax   = float.MinValue;
         int nVertices, nFaces;
 
         const int bufferSize = 128;
         using (var fileStream = File.OpenRead(path))
         using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, bufferSize))
         {
-            string line;
+            string   line;
             string[] sLine;
 
             line = streamReader.ReadLine();
             Debug.Assert(line == "OFF");
 
-            line = streamReader.ReadLine();
+            line  = streamReader.ReadLine();
             sLine = line.Split();
+          
             nVertices = int.Parse(sLine[0]);
-            nFaces = int.Parse(sLine[1]);
+            nFaces    = int.Parse(sLine[1]);
 
             for (int i = 0; i < nVertices; ++i)
             {
-                sLine = streamReader.ReadLine().Replace(".", ",").Split(" ");
+                sLine = streamReader.ReadLine().Split(" ");
                 var x = float.Parse(sLine[0]);
                 var y = float.Parse(sLine[1]);
                 var z = float.Parse(sLine[2]);
@@ -101,11 +99,12 @@ public static class MeshLoader
                 normals[idx3] = normal;
         }
 
-        mesh.vertices  = vertices;
-        mesh.normals   = normals.ToList();
-        mesh.triangles = triangles;
-
-        return mesh;
+        return new Mesh()
+        {
+            vertices  = vertices.ToArray(),
+            normals   = normals,
+            triangles = triangles.ToArray()
+        };
     }
 
     public static void SaveMesh(ref Mesh mesh, string path)
