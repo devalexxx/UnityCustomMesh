@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class MeshLoader
 {
+
     public class Mesh
     {
         public Vector3[] vertices;
@@ -12,61 +13,28 @@ public static class MeshLoader
         public int[]     triangles;
     }
 
-    public static void SaveAsObj(string path, Mesh mesh)
-    {
-        using (var fileStream   = File.OpenWrite(path))
-        using (var streamWriter = new StreamWriter(fileStream, Encoding.UTF8)) {    
-            streamWriter.WriteLine("# " + Path.GetFileName(path));
-            streamWriter.WriteLine();
-            streamWriter.WriteLine("o " + Path.GetFileNameWithoutExtension(path));
-            streamWriter.WriteLine();
-
-            foreach (var v in mesh.vertices)
-            {
-                streamWriter.WriteLine("v " + v.x + " " + v.y + " " + v.z);
-            }
-
-            streamWriter.WriteLine();
-
-            foreach (var v in mesh.normals)
-            {
-                streamWriter.WriteLine("vn " + v.x + " " + v.y + " " + v.z);
-            }
-
-            streamWriter.WriteLine();
-
-            for (int i = 0; i < mesh.triangles.Length; i += 3)
-            {
-                streamWriter.WriteLine("f "
-                    + (mesh.triangles[i + 0] + 1) + "//" + (mesh.triangles[i + 0] + 1) + " "
-                    + (mesh.triangles[i + 1] + 1) + "//" + (mesh.triangles[i + 1] + 1) + " "
-                    + (mesh.triangles[i + 2] + 1) + "//" + (mesh.triangles[i + 2] + 1)
-                );
-            }
-
-        }
-    }
-
-    public static Mesh LoadOFF(string path)
+    public static Mesh LoadOFFMesh(string path)
     {
         List<Vector3> vertices  = new();
         List<int>     triangles = new();
 
         Vector3 vSum = new(0.0f, 0.0f, 0.0f);
-        float mMax = float.MinValue;
+        float mMax   = float.MinValue;
         int nVertices, nFaces;
 
         const int bufferSize = 128;
-        using (var fileStream   = File.OpenRead(path))
-        using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, bufferSize)) {
+        using (var fileStream = File.OpenRead(path))
+        using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, bufferSize))
+        {
             string   line;
             string[] sLine;
 
             line = streamReader.ReadLine();
             Debug.Assert(line == "OFF");
 
-            line = streamReader.ReadLine();
+            line  = streamReader.ReadLine();
             sLine = line.Split();
+          
             nVertices = int.Parse(sLine[0]);
             nFaces    = int.Parse(sLine[1]);
 
@@ -88,7 +56,7 @@ public static class MeshLoader
                 var x = int.Parse(sLine[1]);
                 var y = int.Parse(sLine[2]);
                 var z = int.Parse(sLine[3]);
-                triangles.AddRange( new int[] { x, y, z });
+                triangles.AddRange(new int[] { x, y, z });
             }
 
         }
@@ -124,7 +92,7 @@ public static class MeshLoader
                 normals[idx2] = ((normals[idx2] + normal) / 2).normalized;
             else
                 normals[idx2] = normal;
-            
+
             if (normals[idx3].magnitude > 0.5)
                 normals[idx3] = ((normals[idx3] + normal) / 2).normalized;
             else
@@ -137,5 +105,41 @@ public static class MeshLoader
             normals   = normals,
             triangles = triangles.ToArray()
         };
+    }
+
+    public static void SaveMesh(ref Mesh mesh, string path)
+    {
+        using (var fileStream = File.OpenWrite(path))
+        using (var streamWriter = new StreamWriter(fileStream, Encoding.UTF8))
+        {
+            streamWriter.WriteLine("# " + Path.GetFileName(path));
+            streamWriter.WriteLine();
+            streamWriter.WriteLine("o " + Path.GetFileNameWithoutExtension(path));
+            streamWriter.WriteLine();
+
+            foreach (var v in mesh.vertices)
+            {
+                streamWriter.WriteLine("v " + v.x + " " + v.y + " " + v.z);
+            }
+
+            streamWriter.WriteLine();
+
+            foreach (var v in mesh.normals)
+            {
+                streamWriter.WriteLine("vn " + v.x + " " + v.y + " " + v.z);
+            }
+
+            streamWriter.WriteLine();
+
+            for (int i = 0; i < mesh.triangles.Count; i += 3)
+            {
+                streamWriter.WriteLine("f "
+                    + (mesh.triangles[i + 0] + 1) + "//" + (mesh.triangles[i + 0] + 1) + " "
+                    + (mesh.triangles[i + 1] + 1) + "//" + (mesh.triangles[i + 1] + 1) + " "
+                    + (mesh.triangles[i + 2] + 1) + "//" + (mesh.triangles[i + 2] + 1)
+                );
+            }
+
+        }
     }
 }
