@@ -12,11 +12,6 @@ public class Simplify : MonoBehaviour
     [SerializeField]
     private float _epsilon;
 
-    int GetIndex(int x, int y, int z, int n)
-    {
-        return z * n * n + y * n + x;
-    }
-
     void Start()
     {
         Mesh            mesh   = _filter.mesh;
