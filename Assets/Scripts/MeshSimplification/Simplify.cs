@@ -20,7 +20,7 @@ public class Simplify : MonoBehaviour
     void Start()
     {
         Mesh            mesh   = _filter.mesh;
-        MeshLoader.Mesh loaded = MeshLoader.LoadOFF(_path);
+        MeshLoader.Mesh loaded = MeshLoader.LoadOFFMesh(_path);
 
         int nAxisPartition = (int)(2.0 / _epsilon);
 

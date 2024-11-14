@@ -131,7 +131,7 @@ public static class MeshLoader
 
             streamWriter.WriteLine();
 
-            for (int i = 0; i < mesh.triangles.Count; i += 3)
+            for (int i = 0; i < mesh.triangles.Length; i += 3)
             {
                 streamWriter.WriteLine("f "
                     + (mesh.triangles[i + 0] + 1) + "//" + (mesh.triangles[i + 0] + 1) + " "
